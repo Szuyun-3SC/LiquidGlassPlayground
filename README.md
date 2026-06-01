@@ -29,7 +29,7 @@ against it.
 | Branch | Source app | Navigation | Framework | Notes |
 | ------ | ---------- | ---------- | --------- | ----- |
 | `main` | —          | —          | SwiftUI   | Empty scaffold + docs |
-| _add app branches here_ | | | | |
+| `app/blood` | Blood (American Red Cross) | Tab-based (3 tabs) | Hybrid (UIKit shell + SwiftUI) | Tabs-shell skeleton. See [docs/blood-branch.md](docs/blood-branch.md) |
 
 ## Starting a new app branch
 

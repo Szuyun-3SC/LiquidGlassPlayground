@@ -11,7 +11,8 @@ import SwiftUI
 struct LiquidGlassPlaygroundApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RootContainerView()
+                .ignoresSafeArea()
         }
     }
 }
