@@ -68,6 +68,7 @@ struct ProfileScreen: View {
                 if #available(iOS 26.0, *) {
                     GlassViewsDemo()
                 }
+
 //                BloodTypeCard()
 //                EligibilityCard()
 //                BookButton()
@@ -84,23 +85,63 @@ struct ProfileScreen: View {
 
 private struct ButtonsDemo: View {
     var body: some View {
-        HStack {
-            ForEach(
-                GlassStyle.allCases,
-                id: \.self
-            ) { style in
-                Button {
-                    // Placeholder — appointment flow is out of scope for the shell.
-                } label: {
-                    Text("Button")
-                        .font(.headline)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 6)
+        VStack {
+            HStack {
+                ForEach(
+                    GlassStyle.allCases,
+                    id: \.self
+                ) { style in
+                    Button {
+                        // Placeholder — appointment flow is out of scope for the shell.
+                    } label: {
+                        Text("Button")
+                            .font(.headline)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 6)
+                    }
+                    .buttonStyle(.glassProminentIfAvailable(style))
                 }
-                .buttonStyle(.glassProminentIfAvailable(style))
             }
+            .frame(maxWidth: .infinity)
+
+            HStack {
+                ForEach(
+                    GlassStyle.allCases,
+                    id: \.self
+                ) { style in
+                    Button {
+                        // Placeholder — appointment flow is out of scope for the shell.
+                    } label: {
+                        Text("ultraThinMaterial (0.6)")
+                            .font(.headline)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 6)
+                    }
+                    .buttonStyle(.glassProminentIfAvailable(style))
+                    .background(.ultraThinMaterial.opacity(0.6), in: RoundedRectangle(cornerRadius: 26))
+                }
+            }
+            .frame(maxWidth: .infinity)
+
+            HStack {
+                ForEach(
+                    GlassStyle.allCases,
+                    id: \.self
+                ) { style in
+                    Button {
+                        // Placeholder — appointment flow is out of scope for the shell.
+                    } label: {
+                        Text("ultraThinMaterial")
+                            .font(.headline)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 6)
+                    }
+                    .buttonStyle(.glassProminentIfAvailable(style))
+                    .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 26))
+                }
+            }
+            .frame(maxWidth: .infinity)
         }
-        .frame(maxWidth: .infinity)
     }
 }
 
@@ -154,32 +195,6 @@ private struct GlassViewsDemo: View {
             }
         }
         .frame(maxWidth: .infinity)
-        .overlay {
-            Color.white
-                .opacity(0.5)
-                .frame(height: 120)
-                .overlay(alignment: .bottom) {
-                    Text("Overlay")
-                        .font(.headline)
-                        .foregroundStyle(.arcDarkGray)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 8)
-                        .background {
-                            LinearGradient(
-                                gradient: Gradient(
-                                    colors: [
-                                        .white.opacity(0.2),
-                                        .white
-                                    ]
-                                ),
-                                startPoint: .top,
-                                endPoint: .center
-                            )
-                        }
-                }
-                .padding(.horizontal, -80)
-                .offset(y: 70)
-        }
     }
 }
 
