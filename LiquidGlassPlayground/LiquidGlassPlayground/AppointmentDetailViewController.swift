@@ -16,6 +16,9 @@ final class AppointmentDetailViewController: UITableViewController {
         case reschedule
         case cancel
         case cancelNoPopover
+        case actionsColor
+        case alertColour
+        case alertColourWithPreferredAction
     }
 
     override func viewDidLoad() {
@@ -51,6 +54,18 @@ final class AppointmentDetailViewController: UITableViewController {
             config.text = "Cancel appointment (no popover)"
             config.textProperties.color = BloodTheme.red
             cell.accessoryType = .none
+        case .actionsColor:
+            config.text = "Actions colours"
+            config.textProperties.color = BloodTheme.red
+            cell.accessoryType = .none
+        case .alertColour:
+            config.text = "Alert colours"
+            config.textProperties.color = BloodTheme.red
+            cell.accessoryType = .none
+        case .alertColourWithPreferredAction:
+            config.text = "Alert colours with preferred action"
+            config.textProperties.color = BloodTheme.red
+            cell.accessoryType = .none
         }
 
         cell.contentConfiguration = config
@@ -68,6 +83,12 @@ final class AppointmentDetailViewController: UITableViewController {
             handleCancel(from: tableView.cellForRow(at: indexPath))
         case .cancelNoPopover:
             handleCancelWithoutPopover()
+        case .actionsColor:
+            handleActionsColor(.actionSheet, preferredActionStyle: nil)
+        case .alertColour:
+            handleActionsColor(.alert, preferredActionStyle: nil)
+        case .alertColourWithPreferredAction:
+            handleActionsColor(.alert, preferredActionStyle: .default)
         }
     }
 
@@ -117,6 +138,29 @@ final class AppointmentDetailViewController: UITableViewController {
         cancelAlertController.addAction(continueAction)
 
         return cancelAlertController
+    }
+
+    private func handleActionsColor(
+        _ style: UIAlertController.Style,
+        preferredActionStyle: UIAlertAction.Style?
+    ) {
+        let alertController = UIAlertController(
+            title: "Demonstrate action colours",
+            message: nil,
+            preferredStyle: style
+        )
+
+        let preferredAction = UIAlertAction(title: "Default style", style: .default, handler: nil)
+        alertController.addAction(preferredAction)
+        alertController.addAction(UIAlertAction(title: "Destructive style", style: .destructive, handler: nil))
+        alertController.addAction(UIAlertAction(title: "Cancel style", style: .cancel, handler: nil))
+
+        if let preferredActionStyle {
+            alertController.view.tintColor = .purple
+            alertController.preferredAction = preferredAction
+        }
+
+        present(alertController, animated: true, completion: nil)
     }
 
     private func handleReschedule() {
