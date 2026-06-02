@@ -5,20 +5,21 @@ versus iOS 18, captured while building the `app/blood` Appointment screen. All
 results below were reproduced on an iPhone 17 simulator (iOS 26.3.1); the iOS 18
 column reflects prior behaviour / the audit reference screenshots.
 
-> **TL;DR** — iOS 26 redesigned `UIAlertController`. Two things changed that you
-> cannot control through public API: **action title colour** and **cancel
-> grouping**. The only way to override either is a custom sheet (or private API,
-> which we do not use).
+> **TL;DR** — iOS 26 redesigned `UIAlertController`. Neither **action title
+> colour** nor **cancel grouping** is controllable via public API. Title colour
+> can still be forced with **private API** (the undocumented `titleTextColor`
+> KVC — see §1; not used in this repo); cancel grouping is **style-fixed** with
+> no known override at all. The supported fix for either is a custom sheet.
 
 ## Summary
 
-| Behaviour | iOS 18.x | iOS 26.x | Controllable? |
+| Behaviour | iOS 18.x | iOS 26.x | Controllable on iOS 26? |
 | --- | --- | --- | --- |
 | `.default` / `.cancel` title colour | tint / accent | **label (black)** | ❌ no public API |
-| `.destructive` title colour | red | red | (style-fixed) |
+| `.destructive` title colour | red | red | ❌ style-fixed |
 | `preferredAction` emphasis | **bold title** | **filled / tinted background** | ✅ set `preferredAction` |
-| `.cancel` action grouping | **detached section** below | **grouped** in one card | ❌ no public API |
-| Action sheet placement (iPhone) | bottom-anchored | over the originating view (iPad-style) | n/a |
+| `.cancel` action grouping | **detached section** below | **grouped** in one card | ❌ style-fixed |
+| Action sheet placement (iPhone) | bottom-anchored | over the originating view (iPad-style) | ❌ style-fixed |
 | `.cancel` button when anchored to a `sourceView` | shown | **dropped** (tap-outside = cancel) | via anchoring |
 
 ---
@@ -116,9 +117,9 @@ the bottom, regardless of the order it was added. iOS 26 groups everything
 (including cancel) into a single rounded card. The detached-cancel section
 **does not exist** in the iOS 26 design.
 
-There is **no public API** — no property, flag, or method — on
-`UIAlertController` / `UIAlertAction` to influence sectioning. The system decides
-the layout from each action's `style` plus the OS version.
+Sectioning is **style-fixed** — there is no property, flag, or method on
+`UIAlertController` / `UIAlertAction` to influence it. The system decides the
+layout from each action's `style` plus the OS version.
 
 ### SwiftUI is the same (and gives less control)
 
