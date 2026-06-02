@@ -1,0 +1,59 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="@BG1@"/>
+      <stop offset="1" stop-color="@BG2@"/>
+    </linearGradient>
+    <linearGradient id="body" x1="0" y1="0.18" x2="0" y2="0.85">
+      <stop offset="0"   stop-color="@C_TOP@"/>
+      <stop offset="0.5" stop-color="@C_MID@"/>
+      <stop offset="1"   stop-color="@C_BOT@"/>
+    </linearGradient>
+    <linearGradient id="rim" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0"   stop-color="@RIM@" stop-opacity="0.9"/>
+      <stop offset="0.5" stop-color="@RIM@" stop-opacity="0.1"/>
+      <stop offset="1"   stop-color="@RIM@" stop-opacity="0.4"/>
+    </linearGradient>
+    <radialGradient id="spec" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0"   stop-color="#ffffff" stop-opacity="0.95"/>
+      <stop offset="0.6" stop-color="#ffffff" stop-opacity="0.35"/>
+      <stop offset="1"   stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="14"/>
+    </filter>
+    <filter id="shadow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="26"/>
+    </filter>
+    <clipPath id="drop">
+      <path d="M512,250 C590,430 742,510 742,600 A230,230 0 0 1 282,600 C282,510 434,430 512,250 Z"/>
+    </clipPath>
+  </defs>
+
+  <!-- background -->
+  <rect x="0" y="0" width="1024" height="1024" fill="url(#bg)" fill-opacity="@BG_OP@"/>
+
+  <!-- caustic / contact shadow grounding the droplet -->
+  <ellipse cx="512" cy="858" rx="206" ry="44" fill="@CAUSTIC@" fill-opacity="@CAUSTIC_OP@" filter="url(#shadow)"/>
+
+  <!-- glass droplet body -->
+  <path d="M512,250 C590,430 742,510 742,600 A230,230 0 0 1 282,600 C282,510 434,430 512,250 Z"
+        fill="url(#body)" fill-opacity="@BODY_OP@"/>
+
+  <!-- internal refraction + highlights, clipped to the droplet -->
+  <g clip-path="url(#drop)">
+    <!-- lower inner glow (light bending through glass) -->
+    <ellipse cx="560" cy="724" rx="150" ry="74" fill="#ffffff" fill-opacity="0.12" filter="url(#soft)"/>
+    <!-- main specular highlight, upper-left -->
+    <g transform="rotate(-28 446 506)">
+      <ellipse cx="446" cy="506" rx="86" ry="150" fill="url(#spec)" filter="url(#soft)"/>
+    </g>
+    <!-- crisp bright catch-light -->
+    <circle cx="414" cy="474" r="30" fill="#ffffff" fill-opacity="0.95"/>
+    <circle cx="470" cy="430" r="13" fill="#ffffff" fill-opacity="0.8"/>
+  </g>
+
+  <!-- rim light along the glass edge -->
+  <path d="M512,250 C590,430 742,510 742,600 A230,230 0 0 1 282,600 C282,510 434,430 512,250 Z"
+        fill="none" stroke="url(#rim)" stroke-width="7" stroke-opacity="0.8"/>
+</svg>
