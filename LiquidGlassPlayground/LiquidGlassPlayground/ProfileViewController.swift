@@ -14,6 +14,8 @@ final class ProfileViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemGroupedBackground
 
+        navigationItem.largeTitleDisplayMode = .inline
+
         let host = UIHostingController(rootView: ProfileScreen())
         addChild(host)
         host.view.translatesAutoresizingMaskIntoConstraints = false
