@@ -19,6 +19,7 @@ final class AppointmentDetailViewController: UITableViewController {
         case actionsColor
         case alertColour
         case alertColourWithPreferredAction
+        case cancelGrouping
     }
 
     override func viewDidLoad() {
@@ -66,6 +67,10 @@ final class AppointmentDetailViewController: UITableViewController {
             config.text = "Alert colours with preferred action"
             config.textProperties.color = BloodTheme.red
             cell.accessoryType = .none
+        case .cancelGrouping:
+            config.text = "Cancel grouping (cancel section)"
+            config.textProperties.color = BloodTheme.red
+            cell.accessoryType = .none
         }
 
         cell.contentConfiguration = config
@@ -89,6 +94,8 @@ final class AppointmentDetailViewController: UITableViewController {
             handleActionsColor(.alert, preferredActionStyle: nil)
         case .alertColourWithPreferredAction:
             handleActionsColor(.alert, preferredActionStyle: .default)
+        case .cancelGrouping:
+            handleCancelGroupingTest()
         }
     }
 
@@ -161,6 +168,22 @@ final class AppointmentDetailViewController: UITableViewController {
         }
 
         present(alertController, animated: true, completion: nil)
+    }
+
+    /// Matches the audit screenshots: Reschedule (.default), Confirm Cancellation
+    /// (.destructive), Dismiss (.cancel). On iOS 18 the .cancel action renders in its
+    /// own detached section; on iOS 26 the system groups all actions into one card.
+    /// The sectioning is system-controlled and NOT configurable via public API.
+    private func handleCancelGroupingTest() {
+        let alert = UIAlertController(
+            title: "Are you sure you want to cancel this appointment?",
+            message: nil,
+            preferredStyle: .actionSheet
+        )
+        alert.addAction(UIAlertAction(title: "Reschedule", style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: "Confirm Cancellation", style: .destructive, handler: nil))
+        alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+        present(alert, animated: true, completion: nil)
     }
 
     private func handleReschedule() {
