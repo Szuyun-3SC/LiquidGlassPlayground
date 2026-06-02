@@ -12,6 +12,23 @@ of their production code.
   those same skeletons ("make the tab bar glass", "try a floating glass toolbar
   on the profile screen").
 
+## Running it (no Xcode experience needed)
+
+You don't need to know Xcode or write any code — Claude Code drives it for you.
+
+1. **Install Xcode 26+** from the [Mac App Store](https://apps.apple.com/app/xcode/id497799835), open it once, and let it finish installing components. This is the only prerequisite.
+2. **Open this folder in Claude Code.**
+3. **Ask in plain language**, for example:
+   > Build and run the app in the iPhone simulator and show me a screenshot.
+
+   Claude will pick an available simulator, build the `LiquidGlassPlayground`
+   scheme, launch it, and screenshot it. From there you can ask for changes
+   ("make the tab bar glass", "try a floating glass toolbar on the profile
+   screen") and have it rebuild.
+
+To see real app UI rather than the bare scaffold, switch to an `app/<name>`
+branch first — just ask Claude to "switch to the `app/blood` branch".
+
 ## How the repo works
 
 | Branch          | Contents                                                                 |

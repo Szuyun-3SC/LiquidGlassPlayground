@@ -8,6 +8,17 @@ A sandbox to experiment with Liquid Glass (iOS 26) on the UI *shapes* of real
 apps. `main` is a bare empty SwiftUI app. Each `app/<name>` branch mirrors a real
 app's UI structure with placeholder content and Liquid Glass applied.
 
+## Build & Run
+
+When asked to build, run, or screenshot the app:
+
+- **Scheme:** `LiquidGlassPlayground` (the only scheme; auto-generated).
+- **Build:** `xcodebuild -scheme LiquidGlassPlayground -destination 'platform=iOS Simulator,name=<iPhone sim>' build`.
+  Pick any available iPhone simulator from `xcrun simctl list devices available` — don't hard-code one that may not exist on the user's machine.
+- **Run:** boot the simulator, install the built `.app`, and launch it with
+  `xcrun simctl` (`boot`, `install`, `launch`), then `xcrun simctl io <udid> screenshot` to capture the screen.
+- `main` is the bare scaffold; each `app/<name>` branch has the real UI to look at.
+
 ## Hard guardrails — never violate
 
 - **Never copy production code.** No business logic, API keys, secrets,
