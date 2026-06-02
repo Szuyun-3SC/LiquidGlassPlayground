@@ -25,6 +25,11 @@ enum MockBadges {
     ]
 }
 
+enum MockAppointment {
+    static let date = "Tue 17 Jun, 10:30 AM"
+    static let center = "City Donor Center"
+}
+
 enum MockSocial {
     static let team = ["Alex M.", "Jordan P.", "Sam R.", "Taylor K."]
     static let leaderboard = ["City Donors — 1,204", "Red Squad — 980", "The Pints — 845", "O Positives — 612"]

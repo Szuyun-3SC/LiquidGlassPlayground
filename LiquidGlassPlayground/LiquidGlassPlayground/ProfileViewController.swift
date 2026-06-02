@@ -15,6 +15,12 @@ final class ProfileViewController: UIViewController {
         view.backgroundColor = .systemGroupedBackground
 
         navigationItem.largeTitleDisplayMode = .inline
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: "Appointment",
+            style: .plain,
+            target: self,
+            action: #selector(showAppointmentDetail)
+        )
 
         let host = UIHostingController(rootView: ProfileScreen())
         addChild(host)
@@ -27,5 +33,9 @@ final class ProfileViewController: UIViewController {
             host.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
         host.didMove(toParent: self)
+    }
+
+    @objc private func showAppointmentDetail() {
+        navigationController?.pushViewController(AppointmentDetailViewController(), animated: true)
     }
 }
