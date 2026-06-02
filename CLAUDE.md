@@ -27,6 +27,13 @@ When asked to build, run, or screenshot the app:
   Symbols, and system/asset-catalog images. No real endpoints.
 - The source app is read **only** to understand its UI architecture. Never clone
   or copy a source repo into this one.
+- **No private / undocumented APIs.** Use only public, documented SwiftUI/UIKit
+  APIs. If a requested UI change can only be achieved with a private API,
+  undocumented symbol, SPI, KVC into system internals, or runtime hackery
+  (e.g. poking at `_UI…` views, swizzling system classes), **stop and warn the
+  user with ⚠️ first** — explain that it relies on private API, why that's a
+  problem (App Store rejection, breaks across OS versions), and offer a public
+  alternative or fallback. Only proceed if the user explicitly accepts.
 
 ## Mirror the original exactly
 
