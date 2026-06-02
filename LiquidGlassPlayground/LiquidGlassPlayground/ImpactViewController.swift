@@ -23,6 +23,7 @@ final class ImpactViewController: UIViewController, UITableViewDataSource {
         segmented.selectedSegmentIndex = 0
         segmented.addTarget(self, action: #selector(segmentChanged), for: .valueChanged)
         navigationItem.titleView = segmented
+        updateLeaveButton()
 
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "row")
@@ -37,7 +38,32 @@ final class ImpactViewController: UIViewController, UITableViewDataSource {
     }
 
     @objc private func segmentChanged() {
+        updateLeaveButton()
         tableView.reloadData()
+    }
+
+    /// The "Leave" action only makes sense on the My Team segment.
+    private func updateLeaveButton() {
+        navigationItem.rightBarButtonItem = segmented.selectedSegmentIndex == 0
+            ? UIBarButtonItem(title: "Leave", style: .plain, target: self, action: #selector(handleLeaveCurrentTeam))
+            : nil
+    }
+
+    /// Ported from Blood's `TeamScreen.handleLeaveCurrentTeam` — UI shape only. The
+    /// original clears the user's team and syncs it over the network; here Continue
+    /// is a mock no-op.
+    @objc private func handleLeaveCurrentTeam() {
+        let leaveAlertController = UIAlertController(
+            title: "Leave \(MockSocial.teamName)?",
+            message: "You'll lose your team standing and progress.",
+            preferredStyle: .alert
+        )
+        leaveAlertController.addAction(UIAlertAction(title: "Continue", style: .default) { _ in
+            // Mock: the original sets user.team = nil and calls profileController.updateUser.
+        })
+        leaveAlertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+
+        present(leaveAlertController, animated: true, completion: nil)
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
